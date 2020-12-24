@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to display the array values after the split.</p>
+
+
+<textarea id="input" rows="10" cols="70">
+</textarea>
+<br>
+<button onclick="convertVerses()">Convert</button>
+<br>
+<textarea id="output" rows="10" cols="70">
+</textarea>
+
+<script>
+function convertVerses()
+{
+    var input = document.getElementById("input").value;
+    var lines = input.split(/\r?\n/);
+    var env = "verse";
+    var output = "";
+    for (var i = 0;i < lines.length;i++)
+    {
+    try {
+            // no empty line
+            if (lines.length==1) {
+                // only line of verse
+                output += "\\begin\{"+env+"\}\n" + lines[i] + "\n\\end\{"+env+"\}\n\n";
+            } else if (i==0) {
+                // first line of verse
+                output += "\\begin\{"+env+"\}\n" +lines[i] + "\\\\\n";
+            } else if (i==lines.length-1)  {
+                // last line of verse
+                output += lines[i] + "\n\\end\{"+env+"\}\n\n";
+            } else {
+                // any other line of the verse
+                output += lines[i] + "\\\\\n";
+            }
+        }
+        finally {
+        document.getElementById("output").value = output;
+        }
+}
+}
+
+</script>
+
+</body>
+</html>
